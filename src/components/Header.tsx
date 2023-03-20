@@ -23,7 +23,7 @@ export default function Header() {
         </div>
         <div className={'user-group'}>
             {profile && <div className={styles.profile}>
-                <span>{profile.name}</span>
+                <span className={styles.profileName}>{profile.name}</span>
                 {profile.image && <Image src={profile.image} alt={profile.name} />}
                 {!profile.image && <div className={styles.noAvatar}>{profile.name[0]}</div> }
             </div>}
