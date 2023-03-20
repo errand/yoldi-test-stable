@@ -1,0 +1,45 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #fff;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.logo_group {
+    display: flex;
+}
+
+.slogan {
+    display: none;
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.btn {
+    padding: 4px 33px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+    border-radius: 6px;
+}
+
+.profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.noAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+@media (min-width: 480px) {
+    .slogan {
+        display: block;
+    }
+}

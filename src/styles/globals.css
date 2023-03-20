@@ -1,0 +1,56 @@
+:root {
+  --border-radius: 12px;
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+  'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+  'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  --foreground-rgb: 243, 243, 243;
+
+  --txt-color-rgb: 0, 0, 0;
+  --gray-color-rgb: 131, 131, 131;
+}
+
+/*@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: o, o, o;
+    --txt-color-rgb: 243, 243, 243;
+  }
+}*/
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background: rgb(var(--foreground-rgb));
+  color: rgb(var(--txt-color-rgb));
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/**
+I don't see the Dark theme in the mockups
+ */
+/*@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}*/

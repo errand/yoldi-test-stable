@@ -1,0 +1,12 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    padding: 23px;
+    background: #fff;
+    color: rgb(var(--gray-color-rgb));
+    border-top: 1px solid #E6E6E6;
+}
+
+.footer a {
+    color: rgb(var(--txt-color-rgb));
+}
