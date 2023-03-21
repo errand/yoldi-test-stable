@@ -1,62 +1,87 @@
-import styles from '../styles/Home.module.css'
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { Card, Button, Checkbox, Form, Input } from 'antd';
-
-const onFinish = (values: any) => {
-    console.log('Success:', values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-};
+import Layout from "../components/Layout";
+import styles from "../styles/Home.module.css";
+import {useAuth} from "../hooks/auth";
+import {useState} from "react";
+import {LockOutlined, MailOutlined} from "@ant-design/icons";
 
 export default function Login() {
+
+    const { login } = useAuth({
+        middleware: 'guest',
+        redirectIfAuthenticated: '/',
+    })
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [submitDisabled, setSubmitDisabled] = useState(true);
+    const [errors, setErrors] = useState([])
+
+    const onFinish = (values: any) => {
+        login({email, password, setErrors})
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const onValuesChange = () => {
+        if ( email && password) {
+            setSubmitDisabled(false);
+        } else {
+            setSubmitDisabled(true);
+        }
+    };
+
     return (
-        <>
-            <Header />
-            <main className={styles.main}>
-                <Card>
-                    <h2>Регистрация в Yoldi Agency</h2>
-                    <Form
-                        name="basic"
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
-                        style={{ maxWidth: 600 }}
-                        initialValues={{ remember: true }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
+        <Layout title={'Войти в Yoldi'}>
+            <Card>
+                <h2 className={styles.h2}>Вход в Yoldi Agency</h2>
+                <Form
+                    name="basic"
+                    style={{ maxWidth: 600 }}
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    onValuesChange={onValuesChange}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        name="email"
+                        rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}
+                        onChange={(e) => setEmail(e.target.value)}
                     >
-                        <Form.Item
-                            label="Username"
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
+                        <Input
+                            placeholder={'E-mail'}
+                            size="large"
+                            prefix={<MailOutlined />} />
+                    </Form.Item>
 
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[{ required: true, message: 'Please input your password!' }]}
+                        onChange={(e) => setPassword(e.target.value)}
+                    >
+                        <Input.Password
+                            placeholder={'Пароль'}
+                            size="large"
+                            prefix={<LockOutlined />} />
+                    </Form.Item>
 
-                        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Card>
-            </main>
-            <Footer />
-        </>
+                    <Form.Item style={{ marginBottom: "0px" }}>
+                        <Button
+                            size={'large'}
+                            type={'primary'}
+                            disabled={submitDisabled}
+                            htmlType="submit"
+                            block
+                            className={styles.primaryBtn}>
+                            Войти
+                        </Button>
+                    </Form.Item>
+                    {errors && <div className={styles.danger}>{errors}</div>}
+                </Form>
+            </Card>
+        </Layout>
     );
 }

@@ -1,11 +1,8 @@
 import Image from "next/image";
 import styles from '../styles/Header.module.css';
 import Link from "next/link";
-import {useCookies} from "react-cookie";
 
 export default function Header({ user }) {
-
-    const [slug] = useCookies(['slug'])
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>
@@ -16,7 +13,7 @@ export default function Header({ user }) {
         </div>
         <div className={'user-group'}>
             {user ? (
-                <Link href={`/account/owner/${slug}`}>
+                <Link href={`/account/owner/${user.slug}`}>
                     <div className={styles.profile}>
                         <span className={styles.profileName}>{user.name}</span>
                         {user.image ?

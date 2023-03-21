@@ -26,7 +26,8 @@ export default function Layout({title, children}: layoutProps) {
             <main className={styles.main}>
                 {children}
             </main>
-            <Footer login />
+
+            {user?.message ? <Footer /> : null}
         </>
     )
 }

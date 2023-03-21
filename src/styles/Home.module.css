@@ -11,3 +11,8 @@
     font-weight: normal;
     margin-bottom: 25px;
 }
+
+.danger {
+    padding-top: 20px;
+    color: red;
+}

@@ -5,7 +5,7 @@ import Layout from '../components/Layout'
 export default function Home() {
 
   return (
-    <Layout>
+    <Layout title={'Добро пожаловать'}>
         <div>
             <h1>Привет!</h1>
             <p>Меня зовут <Link className={styles.link}  href={'https://github.com/errand'}>Саша</Link>, я web-разработчик.</p>

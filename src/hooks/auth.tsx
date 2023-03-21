@@ -3,12 +3,6 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {useCookies} from "react-cookie";
 
-interface registerProps {
-    email: string;
-    name: string;
-    password: string;
-}
-
 interface profileType {
     url: string;
     cookies: cookiesType;
@@ -33,7 +27,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             },
         })
             .then((res) => res.json());
-    }
+        }
     );
 
     const register = ({...props }) => {
@@ -50,6 +44,27 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .then(() => mutate());
     }
 
+    const login = ({setErrors, ...props }) => {
+        setErrors([]);
+        return fetch("https://frontend-test-api.yoldi.agency/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify(props),
+            headers: {
+                accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then(data => {
+                if(data.statusCode !== 401) {
+                    setCookie("yoldiToken", data.value)
+                } else {
+                    setErrors(data.message)
+                }
+            })
+            .then(() => mutate());
+    }
+
     useEffect(() => {
         if (middleware === 'guest' && redirectIfAuthenticated && cookies.yoldiToken)
             router.push(redirectIfAuthenticated)
@@ -58,37 +73,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
+        login,
         register
     }
-}
-
-/*
-const { data: profile } = useSWR(
-    { url: `https://frontend-test-api.yoldi.agency/api/profile`, cookies },
-    getProfile
-);
-*/
-
-export async function register(
-    url: string,
-    { arg }: { arg: registerProps }
-) {
-    return fetch(url, {
-        method: "POST",
-        body: JSON.stringify(arg),
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-        },
-    }).then((res) => res.json());
-}
-
-export async function getProfile({url, cookies}: profileType) {
-    return fetch(url, {
-        method: "GET",
-        headers: {
-            accept: "application/json",
-            "X-API-KEY": cookies.yoldiToken,
-        },
-    }).then((res) => res.json());
 }
