@@ -5,18 +5,16 @@ import {Card, Button, Form, Input} from 'antd';
 import {UserOutlined, MailOutlined, LockOutlined} from '@ant-design/icons';
 import {useState} from "react";
 import useSWRMutation from "swr/mutation";
-import {register} from "../hooks/auth";
+import {register, useAuth} from "../hooks/auth";
 import {router} from "next/client";
 import {useCookies} from "react-cookie";
 
 export default function Register() {
 
-    const { trigger } = useSWRMutation(
-        "https://frontend-test-api.yoldi.agency/api/auth/sign-up",
-        register
-    );
-
-    const [cookies, setCookie] = useCookies(["yoldiToken"]);
+    const { register } = useAuth({
+        middleware: 'guest',
+        redirectIfAuthenticated: '/',
+    })
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -37,14 +35,7 @@ export default function Register() {
     };
 
     const onFinish = async () => {
-        const res = await trigger({ name, email, password });
-
-        if (res.value) {
-            setCookie("yoldiToken", res.value);
-            return router.push(`/dashboard`);
-        }
-
-        return;
+        register({name,  email, password})
     };
 
     return (

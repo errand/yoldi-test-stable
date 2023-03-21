@@ -1,18 +1,11 @@
 import Image from "next/image";
 import styles from '../styles/Header.module.css';
 import Link from "next/link";
-import useSWR from "swr";
-import {getProfile} from "../hooks/auth";
 import {useCookies} from "react-cookie";
 
-export default function Header() {
+export default function Header({ user }) {
 
-    const [cookies] = useCookies(["yoldiToken"])
-
-    const { data: profile } = useSWR(
-        { url: `https://frontend-test-api.yoldi.agency/api/profile`, cookies },
-        getProfile
-    );
+    const [slug] = useCookies(['slug'])
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>
@@ -22,12 +15,21 @@ export default function Header() {
             <p className={styles.slogan}>Разрабатываем и запускаем <br/>сложные веб проекты</p>
         </div>
         <div className={'user-group'}>
-            {profile && <div className={styles.profile}>
-                <span className={styles.profileName}>{profile.name}</span>
-                {profile.image && <Image src={profile.image} alt={profile.name} />}
-                {!profile.image && <div className={styles.noAvatar}>{profile.name[0]}</div> }
-            </div>}
-            {!profile && <Link href={'/login'} className={styles.btn}>Войти</Link>}
+            {user ? (
+                <Link href={`/account/owner/${slug}`}>
+                    <div className={styles.profile}>
+                        <span className={styles.profileName}>{user.name}</span>
+                        {user.image ?
+                            <Image src={user.image} alt={user.name} /> :
+                            <div className={styles.noAvatar}>{user?.name[0]}</div>
+                        }
+                    </div>
+                </Link>
+                )
+            : (
+                <Link href={'/login'} className={styles.btn}>Войти</Link>
+                )
+            }
         </div>
     </header>
 }
