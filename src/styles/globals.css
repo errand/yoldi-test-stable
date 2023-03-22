@@ -47,6 +47,20 @@ a {
   text-decoration: none;
 }
 
+.ant-btn-default:not(:disabled):hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.ant-modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ant-modal-footer button {
+  flex: 1;
+}
+
 /**
 I don't see the Dark theme in the mockups
  */

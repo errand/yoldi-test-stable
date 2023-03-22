@@ -1,19 +1,21 @@
 import styles from '@/styles/Account.module.css'
 import Layout from '../components/Layout'
 import {useState} from "react";
-import {Button} from "antd";
+import {Button, Modal} from "antd";
 import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
 import {useAuth} from "../hooks/auth";
 
 interface profileType {
     user: {
         name: string,
+        email: string,
         message?: string,
         description: string,
         image: string,
     },
     profile: {
         name: string,
+        email: string,
         message?: string,
         description: string
         image: string,
@@ -28,6 +30,7 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [avatarHover, setAvatarHover] = useState(false)
     const [isBg, setBg] = useState(false)
     const [isAvatar, setAvatar] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleBgClick = () => {
         setBg(!isBg);
@@ -71,12 +74,42 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                         }
                     </div>
                     <div className={styles.userNameWrapper}>
-                        <h1>{user?.name}</h1>
-                        {isAuthor && <Button size={'large'} icon={<EditOutlined/>}>Редактировать</Button>}
+                        <div className={styles.userInfo}>
+                            <h1 className={styles.h1}>{user?.name}</h1>
+                            <div className={styles.email}>{user?.email}</div>
+                        </div>
+                        {isAuthor && <>
+                            <Modal
+                                title="Vertically centered modal dialog"
+                                centered
+                                open={modalOpen}
+                                onOk={() => setModalOpen(false)}
+                                onCancel={() => setModalOpen(false)}
+                                className={styles.modal}
+                                footer={[
+                                    <Button size={'large'} key="cancel">
+                                        Отмена
+                                    </Button>,
+                                    <Button
+                                        key="submit"
+                                        type="primary"
+                                    >
+                                        Сохранить
+                                    </Button>,
+                                ]}
+                            >
+                                <p>some contents...</p>
+                                <p>some contents...</p>
+                                <p>some contents...</p>
+                            </Modal>
+                            <Button size={'large'} icon={<EditOutlined/>} onClick={() => setModalOpen(true)}>Редактировать</Button>
+                        </>}
                     </div>
                     {user?.description && <div className={styles.userDescription}>{user?.description}</div>}
 
-                    {isAuthor && <Button size={'large'} icon={<LogoutOutlined/>} onClick={logout}>Выход</Button>}
+                    {isAuthor && <div className={styles.exit}>
+                        <Button size={'large'} icon={<LogoutOutlined/>} onClick={logout}>Выход</Button>
+                    </div> }
                 </div>
             </main>
         </Layout>)

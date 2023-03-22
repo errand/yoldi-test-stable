@@ -54,8 +54,25 @@
 .userNameWrapper {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
 }
 
-.userNameWrapper h1 {
+.userInfo {
     flex-basis: 600px;
+}
+
+.h1 {
+    margin-bottom: 10px;
+    line-height: 42px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.email {
+    color: rgb(var(--gray-color-rgb));
+}
+
+.exit {
+    padding-top: 60px;
 }
