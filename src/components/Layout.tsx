@@ -3,7 +3,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import {useAuth} from "../hooks/auth";
 import {ReactNode} from "react";
-import styles from '@/styles/Layout.module.css'
 
 interface layoutProps {
     title: string,
@@ -12,7 +11,7 @@ interface layoutProps {
 
 export default function Layout({title, children}: layoutProps) {
 
-    const { user } = useAuth({ middleware: 'auth' });
+    const { profile } = useAuth();
 
     return (
         <>
@@ -22,12 +21,9 @@ export default function Layout({title, children}: layoutProps) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header user={!user?.message ? user : null} />
-            <main className={styles.main}>
-                {children}
-            </main>
-
-            {user?.message ? <Footer /> : null}
+            <Header profile={!profile?.message ? profile : null} />
+            {children}
+            {profile?.message ? <Footer /> : null}
         </>
     )
 }

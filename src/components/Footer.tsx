@@ -11,7 +11,7 @@ export default function Footer() {
 
     useEffect(() => {
         if(asPath.includes('login')) setLogin(false)
-    }, [asPath])
+    }, [])
 
     return <footer className={styles.footer}>
         {login && <div>Уже есть аккаунт? <Link href={'/login'}>Войти</Link></div>}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from '../styles/Header.module.css';
 import Link from "next/link";
 
-export default function Header({ user }) {
+export default function Header({ profile }) {
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>
@@ -12,13 +12,13 @@ export default function Header({ user }) {
             <p className={styles.slogan}>Разрабатываем и запускаем <br/>сложные веб проекты</p>
         </div>
         <div className={'user-group'}>
-            {user ? (
-                <Link href={`/account/owner/${user.slug}`}>
+            {profile ? (
+                <Link href={`/account/${profile.slug}`}>
                     <div className={styles.profile}>
-                        <span className={styles.profileName}>{user.name}</span>
-                        {user.image ?
-                            <Image src={user.image} alt={user.name} /> :
-                            <div className={styles.noAvatar}>{user?.name[0]}</div>
+                        <span className={styles.profileName}>{profile.name}</span>
+                        {profile.image ?
+                            <Image src={profile.image} alt={profile.name} /> :
+                            <div className={styles.noAvatar}>{profile?.name[0]}</div>
                         }
                     </div>
                 </Link>

@@ -1,0 +1,53 @@
+.main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 860px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    background-color: rgb(var(--foreground-rgb));
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-bottom: 1px solid rgb(var(--gray-300-rgb));
+}
+
+.userAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgb(var(--foreground-rgb));
+    border:1px solid rgb(var(--gray-300-rgb));
+    font-size: 36px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.avatarButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 50px;
+    z-index: 99;
+
+}

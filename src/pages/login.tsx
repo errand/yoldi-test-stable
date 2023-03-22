@@ -35,53 +35,55 @@ export default function Login() {
 
     return (
         <Layout title={'Войти в Yoldi'}>
-            <Card>
-                <h2 className={styles.h2}>Вход в Yoldi Agency</h2>
-                <Form
-                    name="basic"
-                    style={{ maxWidth: 600 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    onValuesChange={onValuesChange}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        name="email"
-                        rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}
-                        onChange={(e) => setEmail(e.target.value)}
+            <main className={styles.main}>
+                <Card style={{ width: 400, borderColor: '#E6E6E6' }}>
+                    <h2 className={styles.h2}>Вход в Yoldi Agency</h2>
+                    <Form
+                        name="basic"
+                        style={{ maxWidth: 400 }}
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        onValuesChange={onValuesChange}
+                        autoComplete="off"
                     >
-                        <Input
-                            placeholder={'E-mail'}
-                            size="large"
-                            prefix={<MailOutlined />} />
-                    </Form.Item>
+                        <Form.Item
+                            name="email"
+                            rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}
+                            onChange={(e) => setEmail(e.target.value)}
+                        >
+                            <Input
+                                placeholder={'E-mail'}
+                                size="large"
+                                prefix={<MailOutlined />} />
+                        </Form.Item>
 
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
-                        onChange={(e) => setPassword(e.target.value)}
-                    >
-                        <Input.Password
-                            placeholder={'Пароль'}
-                            size="large"
-                            prefix={<LockOutlined />} />
-                    </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            onChange={(e) => setPassword(e.target.value)}
+                        >
+                            <Input.Password
+                                placeholder={'Пароль'}
+                                size="large"
+                                prefix={<LockOutlined />} />
+                        </Form.Item>
 
-                    <Form.Item style={{ marginBottom: "0px" }}>
-                        <Button
-                            size={'large'}
-                            type={'primary'}
-                            disabled={submitDisabled}
-                            htmlType="submit"
-                            block
-                            className={styles.primaryBtn}>
-                            Войти
-                        </Button>
-                    </Form.Item>
-                    {errors && <div className={styles.danger}>{errors}</div>}
-                </Form>
-            </Card>
+                        <Form.Item style={{ marginBottom: "0px" }}>
+                            <Button
+                                size={'large'}
+                                type={'primary'}
+                                disabled={submitDisabled}
+                                htmlType="submit"
+                                block
+                                className={styles.primaryBtn}>
+                                Войти
+                            </Button>
+                        </Form.Item>
+                        {errors && <div className={styles.danger}>{errors}</div>}
+                    </Form>
+                </Card>
+            </main>
         </Layout>
     );
 }

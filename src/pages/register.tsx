@@ -44,64 +44,66 @@ export default function Register() {
 
     return (
         <Layout title={'Регистрация'}>
-            <Card style={{ width: 400, borderColor: '#E6E6E6' }}>
-                <h2 className={styles.h2}>Регистрация <br/>в Yoldi Agency</h2>
-                <Form
-                    name="basic"
-                    style={{ maxWidth: 600 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    onValuesChange={onValuesChange}
-                    validateMessages={validateMessages}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        name="name"
-                        rules={[{ required: true }]}
+            <main className={styles.main}>
+                <Card style={{ width: 400, borderColor: '#E6E6E6' }}>
+                    <h2 className={styles.h2}>Регистрация <br/>в Yoldi Agency</h2>
+                    <Form
+                        name="basic"
+                        style={{ maxWidth: 400 }}
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        onValuesChange={onValuesChange}
+                        validateMessages={validateMessages}
+                        autoComplete="off"
                     >
-                        <Input
-                            placeholder={'Имя'}
-                            size="large"
-                            prefix={<UserOutlined />}
-                            onChange={(e) => setName(e.target.value)}/>
-                    </Form.Item>
+                        <Form.Item
+                            name="name"
+                            rules={[{ required: true }]}
+                        >
+                            <Input
+                                placeholder={'Имя'}
+                                size="large"
+                                prefix={<UserOutlined />}
+                                onChange={(e) => setName(e.target.value)}/>
+                        </Form.Item>
 
-                    <Form.Item
-                        name="email"
-                        rules={[{ type: 'email', required: true }]}
-                    >
-                        <Input
-                            placeholder={'E-mail'}
-                            size="large"
-                            prefix={<MailOutlined />}
-                            onChange={(e) => setEmail(e.target.value)}  />
-                    </Form.Item>
+                        <Form.Item
+                            name="email"
+                            rules={[{ type: 'email', required: true }]}
+                        >
+                            <Input
+                                placeholder={'E-mail'}
+                                size="large"
+                                prefix={<MailOutlined />}
+                                onChange={(e) => setEmail(e.target.value)}  />
+                        </Form.Item>
 
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true }]}
-                    >
-                        <Input.Password
-                            placeholder={'Пароль'}
-                            size="large"
-                            prefix={<LockOutlined />}
-                            onChange={(e) => setPwd(e.target.value)} />
-                    </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[{ required: true }]}
+                        >
+                            <Input.Password
+                                placeholder={'Пароль'}
+                                size="large"
+                                prefix={<LockOutlined />}
+                                onChange={(e) => setPwd(e.target.value)} />
+                        </Form.Item>
 
-                    <Form.Item style={{ marginBottom: "0px" }}>
-                        <Button
-                            size={'large'}
-                            type={'primary'}
-                            disabled={submitDisabled}
-                            htmlType="submit"
-                            block
-                            className={styles.primaryBtn}>
-                            Создать аккаунт
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Card>
+                        <Form.Item style={{ marginBottom: "0px" }}>
+                            <Button
+                                size={'large'}
+                                type={'primary'}
+                                disabled={submitDisabled}
+                                htmlType="submit"
+                                block
+                                className={styles.primaryBtn}>
+                                Создать аккаунт
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </main>
         </Layout>
     );
 }
