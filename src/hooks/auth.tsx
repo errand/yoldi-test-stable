@@ -24,7 +24,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
     const searchParams = useSearchParams();
     const searchId = searchParams.get("id");
 
-    const { data: profile, error, mutate } = useSWR(
+    const { data: profile, mutate } = useSWR(
         { url: `https://frontend-test-api.yoldi.agency/api/profile`, cookies },
         ({url, cookies}: profileType) => {
         return fetch(url, {
@@ -68,7 +68,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
             .then(() => mutate());
     }
 
-    const login = ({setErrors, ...props }) => {
+    const login = ({setErrors, ...props }: any) => {
         setErrors([]);
         return fetch("https://frontend-test-api.yoldi.agency/api/auth/login", {
             method: "POST",

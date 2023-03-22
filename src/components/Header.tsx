@@ -2,7 +2,16 @@ import Image from "next/image";
 import styles from '../styles/Header.module.css';
 import Link from "next/link";
 
-export default function Header({ profile }) {
+interface profileType {
+    profile: {
+    name: string,
+    message?: string,
+    image?: string,
+    slug: string,
+}
+}
+
+export default function Header({ profile }: profileType) {
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>

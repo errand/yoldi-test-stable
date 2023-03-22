@@ -50,23 +50,25 @@ export default function Login() {
                         <Form.Item
                             name="email"
                             rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}
-                            onChange={(e) => setEmail(e.target.value)}
                         >
                             <Input
                                 placeholder={'E-mail'}
                                 size="large"
-                                prefix={<MailOutlined />} />
+                                prefix={<MailOutlined />}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </Form.Item>
 
                         <Form.Item
                             name="password"
                             rules={[{ required: true, message: 'Please input your password!' }]}
-                            onChange={(e) => setPassword(e.target.value)}
                         >
                             <Input.Password
                                 placeholder={'Пароль'}
                                 size="large"
-                                prefix={<LockOutlined />} />
+                                prefix={<LockOutlined />}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </Form.Item>
 
                         <Form.Item style={{ marginBottom: "0px" }}>

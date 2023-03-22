@@ -49,5 +49,13 @@
     color: white;
     font-size: 50px;
     z-index: 99;
+}
 
+.userNameWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userNameWrapper h1 {
+    flex-basis: 600px;
 }
