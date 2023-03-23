@@ -4,22 +4,12 @@ import {useState} from "react";
 import {Button, Modal} from "antd";
 import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
 import {useAuth} from "../hooks/auth";
+import ProfileEditForm from "./ProfileEditForm";
+import {profile} from "../types/profileType";
 
 interface profileType {
-    user: {
-        name: string,
-        email: string,
-        message?: string,
-        description: string,
-        image: string,
-    },
-    profile: {
-        name: string,
-        email: string,
-        message?: string,
-        description: string
-        image: string,
-    },
+    user: profile,
+    profile: profile,
     isAuthor: boolean
 }
 
@@ -31,6 +21,10 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [isBg, setBg] = useState(false)
     const [isAvatar, setAvatar] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
+
+    const showModal = () => {
+        setModalOpen(true);
+    };
 
     const handleBgClick = () => {
         setBg(!isBg);
@@ -70,42 +64,30 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                     >
                         {avatarHover && isAuthor ?
                             <span className={styles.avatarButton} onClick={handleAvatarClick}><CameraOutlined/></span> :
-                            !isAvatar && <div className={styles.noAvatar}>{user?.name[0]}</div>
+                            !isAvatar && <div className={styles.noAvatar}>{profile?.name[0]}</div>
                         }
                     </div>
                     <div className={styles.userNameWrapper}>
                         <div className={styles.userInfo}>
-                            <h1 className={styles.h1}>{user?.name}</h1>
-                            <div className={styles.email}>{user?.email}</div>
+                            <h1 className={styles.h1}>{isAuthor? profile.name : user?.name}</h1>
+                            <div className={styles.email}>{isAuthor ? profile.email : user?.email}</div>
                         </div>
                         {isAuthor && <>
                             <Modal
-                                title="Vertically centered modal dialog"
+                                title={false}
+                                closable={false}
+                                maskClosable={false}
                                 centered
                                 open={modalOpen}
-                                onOk={() => setModalOpen(false)}
-                                onCancel={() => setModalOpen(false)}
                                 className={styles.modal}
-                                footer={[
-                                    <Button size={'large'} key="cancel">
-                                        Отмена
-                                    </Button>,
-                                    <Button
-                                        key="submit"
-                                        type="primary"
-                                    >
-                                        Сохранить
-                                    </Button>,
-                                ]}
+                                footer={false}
                             >
-                                <p>some contents...</p>
-                                <p>some contents...</p>
-                                <p>some contents...</p>
+                                <ProfileEditForm profile={profile} setModalOpen={(e: any) => setModalOpen(e)} />
                             </Modal>
-                            <Button size={'large'} icon={<EditOutlined/>} onClick={() => setModalOpen(true)}>Редактировать</Button>
+                            <Button className={styles.editButton} size={'large'} icon={<EditOutlined/>} onClick={showModal}>Редактировать</Button>
                         </>}
                     </div>
-                    {user?.description && <div className={styles.userDescription}>{user?.description}</div>}
+                    {user?.description && <div className={styles.userDescription}>{isAuthor ? profile.description : user?.description}</div>}
 
                     {isAuthor && <div className={styles.exit}>
                         <Button size={'large'} icon={<LogoutOutlined/>} onClick={logout}>Выход</Button>

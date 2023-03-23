@@ -1,0 +1,20 @@
+.h2 {
+    font-size: 1.88rem;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.buttons button {
+    flex: 1;
+}
+
+.small {
+    font-size: 0.85rem;
+    color: rgb(var(--gray-300-rgb));
+}

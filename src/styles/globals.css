@@ -47,18 +47,48 @@ a {
   text-decoration: none;
 }
 
+button, .ant-btn {
+  font-weight: 500;
+}
+
 .ant-btn-default:not(:disabled):hover {
   background-color: #000;
   color: #fff;
 }
 
-.ant-modal-footer {
-  display: flex;
-  justify-content: space-between;
+.ant-input-focused, .ant-input-affix-wrapper:focus, .ant-input:focus, .ant-input-affix-wrapper-focused {
+  box-shadow: none;
 }
 
-.ant-modal-footer button {
-  flex: 1;
+.ant-form-item .ant-form-item-label >label {
+  color: rgb(var(--gray-color-rgb));
+}
+
+@media (max-width: 640px) {
+  .ant-modal-root .ant-modal-mask {
+    display: none;
+  }
+
+  .ant-modal-root .ant-modal-wrap {
+    top: 85px;
+  }
+
+  .ant-modal-root .ant-modal-centered .ant-modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ant-modal-body {
+    flex: 1;
+  }
 }
 
 /**

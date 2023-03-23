@@ -68,6 +68,19 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
             .then(() => mutate());
     }
 
+    const edit = ({...props }) => {
+        return fetch("https://frontend-test-api.yoldi.agency/api/profile", {
+            method: "PATCH",
+            body: JSON.stringify(props),
+            headers: {
+                accept: "application/json",
+                "Content-Type": "application/json",
+                "X-API-KEY": cookies.yoldiToken,
+            },
+        })
+            .then((res) => res.json())
+    }
+
     const login = ({setErrors, ...props }: any) => {
         setErrors([]);
         return fetch("https://frontend-test-api.yoldi.agency/api/auth/login", {
@@ -90,8 +103,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
     }
 
     const logout = async () => {
-        await removeCookie("yoldiToken");
         await router.push('/')
+        await removeCookie("yoldiToken");
     }
 
     useEffect(() => {

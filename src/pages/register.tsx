@@ -31,7 +31,7 @@ export default function Register() {
     };
 
     const onFinish = async () => {
-        register({name,  email, password})
+        await register({name,  email, password})
     };
 
     /* eslint-disable no-template-curly-in-string */

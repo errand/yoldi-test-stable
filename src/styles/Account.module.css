@@ -53,13 +53,27 @@
 
 .userNameWrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
     margin-bottom: 10px;
 }
-
 .userInfo {
-    flex-basis: 600px;
+    margin-bottom: 20px;
+}
+
+.editButton {
+    max-width: 200px;
+}
+
+@media (min-width: 640px) {
+    .userInfo {
+        flex-basis: 600px;
+    }
+
+    .userNameWrapper {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
 }
 
 .h1 {
