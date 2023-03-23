@@ -35,7 +35,6 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     };
 
     return <>
-
         {user && profile &&
         !user?.message && (<Layout title={`Добро пожаловать, ${profile?.name}`}>
             <main className={styles.main}>

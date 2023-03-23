@@ -1,17 +1,9 @@
 import Image from "next/image";
 import styles from '../styles/Header.module.css';
 import Link from "next/link";
+import {profile} from "../types/profileType";
 
-interface profileType {
-    profile: {
-    name: string,
-    message?: string,
-    image?: string,
-    slug: string,
-}
-}
-
-export default function Header({ profile }: profileType) {
+export default function Header({ profile }: profile) {
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>
@@ -26,7 +18,7 @@ export default function Header({ profile }: profileType) {
                     <div className={styles.profile}>
                         <span className={styles.profileName}>{profile.name}</span>
                         {profile.image ?
-                            <Image src={profile.image} alt={profile.name} /> :
+                            <Image src={profile.image.url} alt={profile.name} /> :
                             <div className={styles.noAvatar}>{profile?.name[0]}</div>
                         }
                     </div>

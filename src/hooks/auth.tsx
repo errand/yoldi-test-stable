@@ -1,4 +1,4 @@
-import useSWR, {mutate} from "swr";
+import useSWR from "swr";
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {useCookies} from "react-cookie";
@@ -67,19 +67,21 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
             .then(data => setCookie("yoldiToken", data.value))
             .then(() => mutate());
     }
-
-    const edit = ({...props }) => {
-        return fetch("https://frontend-test-api.yoldi.agency/api/profile", {
-            method: "PATCH",
-            body: JSON.stringify(props),
-            headers: {
-                accept: "application/json",
-                "Content-Type": "application/json",
-                "X-API-KEY": cookies.yoldiToken,
-            },
-        })
-            .then((res) => res.json())
-    }
+    /**
+     * TODO: refactor Edit to useSWR
+     */
+    /*    const edit = ({...props }) => {
+            return fetch("https://frontend-test-api.yoldi.agency/api/profile", {
+                method: "PATCH",
+                body: JSON.stringify(props),
+                headers: {
+                    accept: "application/json",
+                    "Content-Type": "application/json",
+                    "X-API-KEY": cookies.yoldiToken,
+                },
+            })
+                .then((res) => res.json())
+        }*/
 
     const login = ({setErrors, ...props }: any) => {
         setErrors([]);
@@ -106,6 +108,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }:authType = {}) =
         await router.push('/')
         await removeCookie("yoldiToken");
     }
+
+    /**
+     * TODO: refactor to use as hook
+     */
+    /*const { data: userList } = useSWR(`/api/user`, () => {
+        return fetch(`https://frontend-test-api.yoldi.agency/api/user`).then((res) => res.json()).then(data => console.log(data))
+    })*/
 
     useEffect(() => {
         if (middleware === 'guest' && redirectIfAuthenticated && cookies.yoldiToken)
