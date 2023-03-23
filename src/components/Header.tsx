@@ -3,7 +3,7 @@ import styles from '../styles/Header.module.css';
 import Link from "next/link";
 import {profile} from "../types/profileType";
 
-export default function Header({ profile }: profile) {
+export default function Header({ profile }: {profile: profile}) {
 
     return <header className={styles.header}>
         <div className={styles.logo_group}>

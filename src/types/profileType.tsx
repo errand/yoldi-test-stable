@@ -2,11 +2,11 @@ export interface profile {
     name: string,
     email: string,
     slug: string,
-    message?: {
+    image?: {
         id: string,
         url: string,
         width: string
     },
     description?: string
-    image?: string,
+    message?: string,
 }
