@@ -1,18 +1,7 @@
 .main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    background: #fff;
+    justify-content: flex-start;
+    background-color: #fff;
 }
-
-.wrapper {
-    width: 100%;
-    max-width: 860px;
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
 .cover {
     display: flex;
     justify-content: center;
@@ -54,7 +43,7 @@
 .userNameWrapper {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 .userInfo {
     margin-bottom: 20px;

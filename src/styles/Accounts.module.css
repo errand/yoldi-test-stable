@@ -1,23 +1,12 @@
 .main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
     background: #fff;
 }
 
-.wrapper {
-    width: 100%;
-    max-width: 860px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 50px;
-}
-
 .h1 {
+    margin-top: 50px;
     padding-bottom: 30px;
-    border-bottom: 1px solid rgb(var(--gray-300-rgb));
     margin-bottom: 0;
+    border-bottom: 1px solid rgb(var(--gray-300-rgb));
 }
 
 .row {

@@ -15,7 +15,7 @@ export default function Accounts() {
 
     return <Layout title={'Список пользователей'}>
         <main className={styles.main}>
-            <div className={styles.wrapper}>
+            <div className={'wrapper'}>
                 <h1 className={styles.h1}>Список аккаунтов</h1>
                 {list && list.map(user => <UserRow key={user.name+user.slug} user={user} />)}
             </div>

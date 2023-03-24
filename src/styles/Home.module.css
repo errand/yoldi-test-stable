@@ -1,13 +1,18 @@
-.main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.title {
+    padding-top: 50px;
+    margin-bottom: 30px;
+}
+
+.intro {
+    line-height: 150%;
+}
+
+.intro p {
+    margin-bottom: 10px;
 }
 
 .link {
-    border-bottom: 2px dotted #FEFF80;
+    border-bottom: 2px dotted #636363;
 }
 
 .primaryBtn {

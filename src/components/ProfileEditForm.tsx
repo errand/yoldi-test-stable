@@ -46,6 +46,7 @@ export default function ProfileEditForm({profile, setModalOpen}: editType) {
                 if(profile.slug !== data.slug) {
                     logout()
                 }
+                setModalOpen(false)
             });
     }
 
@@ -92,8 +93,6 @@ export default function ProfileEditForm({profile, setModalOpen}: editType) {
                     size="large"
                     addonBefore={process.env.NEXT_PUBLIC_BACKEND_URL}
                     onChange={(e) => setSlug(e.target.value)}  />
-
-                <div className={styles.small}>При изменении адреса профиля, необходимо авторизоваться заново.</div>
             </Form.Item>
 
             <Form.Item

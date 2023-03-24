@@ -41,7 +41,7 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                 <div className={styles.cover}
                      onMouseEnter={() => setCoverHover(true)}
                      onMouseLeave={() => setCoverHover(false)}
-                     style={{backgroundImage: isBg ? "url(/account-bg.jpg)" : 'none'}}
+                     style={{backgroundImage: isBg ? "url(/account-bg.jpg)" : user.cover?.url ? `url(${user.cover?.url})` : 'none'}}
                 >
                     {coverHover && isAuthor && (<>
                         {!isBg && <Button size={"large"} icon={<UploadOutlined/>}
@@ -51,19 +51,19 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                     </>)
                     }
                 </div>
-                <div className={styles.wrapper}>
+                <div className={'wrapper'}>
                     <div className={styles.userAvatar}
                          onMouseEnter={() => setAvatarHover(true)}
                          onMouseLeave={() => setAvatarHover(false)}
                          style={{
-                             backgroundImage: isAvatar ? "url(/vlad.png)" : 'none',
+                             backgroundImage: isAvatar ? "url(/vlad.png)" : user.image?.url ? `url(${user.image?.url})` : 'none',
                              backgroundColor: avatarHover && !isAvatar ? "black" : '',
                              color: avatarHover ? "white" : ''
                          }}
                     >
                         {avatarHover && isAuthor ?
                             <span className={styles.avatarButton} onClick={handleAvatarClick}><CameraOutlined/></span> :
-                            !isAvatar && <div className={styles.noAvatar}>{profile?.name[0]}</div>
+                            !isAvatar && !user.image?.url && <div className={styles.noAvatar}>{profile?.name[0]}</div>
                         }
                     </div>
                     <div className={styles.userNameWrapper}>

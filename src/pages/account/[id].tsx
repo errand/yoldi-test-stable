@@ -5,5 +5,5 @@ export default function Home(): JSX.Element {
 
     const { profile, user } = useAuth({ middleware: 'auth' })
 
-    return <><Profile profile={profile} user={user} isAuthor={profile?.slug === user?.slug} /></>
+    return <Profile profile={profile} user={user} isAuthor={profile?.slug === user?.slug} />
 }

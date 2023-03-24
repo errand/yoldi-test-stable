@@ -7,6 +7,11 @@ export interface profile {
         url: string,
         width: string
     },
+    cover?: {
+        id: string,
+        url: string,
+        width: string
+    },
     description?: string
     message?: string,
 }

@@ -35,7 +35,7 @@ export default function Login() {
 
     return (
         <Layout title={'Войти в Yoldi'}>
-            <main className={styles.main}>
+            <main className={'main'}>
                 <Card style={{ width: 400, borderColor: '#E6E6E6' }}>
                     <h2 className={styles.h2}>Вход в Yoldi Agency</h2>
                     <Form
