@@ -1,8 +1,8 @@
-import { Card, Button, Checkbox, Form, Input } from 'antd';
+import { Card, Button, Form, Input } from 'antd';
 import Layout from "../components/Layout";
 import styles from "../styles/Home.module.css";
 import {useAuth} from "../hooks/auth";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {LockOutlined, MailOutlined} from "@ant-design/icons";
 
 export default function Login() {
@@ -17,21 +17,21 @@ export default function Login() {
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [errors, setErrors] = useState([])
 
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         login({email, password, setErrors})
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
     const onValuesChange = () => {
-        if ( email && password) {
+        if ( email.includes('@') && password) {
             setSubmitDisabled(false);
         } else {
             setSubmitDisabled(true);
         }
     };
+
+    useEffect(() => {
+        onValuesChange()
+    })
 
     return (
         <Layout title={'Войти в Yoldi'}>
@@ -43,9 +43,6 @@ export default function Login() {
                         style={{ maxWidth: 400 }}
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        onValuesChange={onValuesChange}
-                        autoComplete="off"
                     >
                         <Form.Item
                             name="email"

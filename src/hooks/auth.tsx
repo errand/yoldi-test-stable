@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import {useEffect} from 'react'
+import {useRouter} from 'next/router'
 import {useCookies} from "react-cookie";
 import {useSearchParams} from "next/navigation";
 

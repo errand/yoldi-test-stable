@@ -1,5 +1,6 @@
 .main {
     background: #fff;
+    justify-content: flex-start;
 }
 
 .h1 {
