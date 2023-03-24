@@ -58,3 +58,9 @@
     font-size: 18px;
     text-transform: uppercase;
 }
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 0;
+}
