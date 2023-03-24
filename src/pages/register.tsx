@@ -29,7 +29,6 @@ export default function Register() {
         await register({name,  email, password})
     };
 
-    /* eslint-disable no-template-curly-in-string */
     const validateMessages = {
         required: '${label} обязательно!',
         types: {

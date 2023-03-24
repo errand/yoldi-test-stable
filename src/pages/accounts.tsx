@@ -24,13 +24,18 @@ export default function Accounts() {
     return <Layout title={'Список пользователей'}>
         <main className={styles.main}>
             <div className={'wrapper'}>
+
                 <h1 className={styles.h1}>Список аккаунтов</h1>
+
                 {list.length < 1 && <div className={'loader'}><LoadingOutlined /></div>}
+
                 {list && list.slice(page*limit,limit*(page+1)).map(user => <UserRow key={user.name+user.slug} user={user} />)}
+
                 <div className={styles.buttons}>
                     <Button size={'large'} onClick={onPrevPage}>Назад</Button>
                     <Button size={'large'} onClick={onNextPage}>Вперёд</Button>
                 </div>
+
             </div>
         </main>
     </Layout>
