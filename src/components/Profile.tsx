@@ -6,6 +6,8 @@ import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOut
 import {useAuth} from "../hooks/auth";
 import ProfileEditForm from "./ProfileEditForm";
 import {profile} from "../types/profileType";
+import useSWRMutation from "swr/mutation";
+import {useCookies} from "react-cookie";
 
 interface profileType {
     user: profile,
@@ -21,6 +23,35 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [isBg, setBg] = useState(false)
     const [isAvatar, setAvatar] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
+    const [cookies] = useCookies(["yoldiToken"])
+    const [file, setFile] = useState<File>();
+
+
+    const handleUploadClick = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
+
+        if (!file) {
+            return;
+        }
+
+        console.log(file)
+
+        // 👇 Uploading the file using the fetch API to the server
+        fetch('https://frontend-test-api.yoldi.agency/api/image', {
+            method: 'POST',
+            body: file,
+            // 👇 Set headers manually for single file upload
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'accept': 'application/json'
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.error(err));
+    };
 
     const showModal = () => {
         setModalOpen(true);
@@ -34,6 +65,35 @@ export default function Profile({user, profile, isAuthor}: profileType) {
         setAvatar(!isAvatar);
     };
 
+    const { trigger } = useSWRMutation(
+        {
+            url: "https://frontend-test-api.yoldi.agency/api/profile",
+            cookies,
+        },
+        editUserInfo
+    );
+    async function editUserInfo(
+        { url, cookies }: { url: string; cookies: string | any },
+        { arg }: { arg: any }
+    ) {
+        return fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(arg),
+            headers: {
+                accept: "application/json",
+                "Content-Type": "application/json",
+                "X-API-KEY": cookies.yoldiToken,
+            },
+        })
+            .then((res) => res.json())
+            .then(data => {
+                if(profile.slug !== data.slug) {
+                    logout()
+                }
+                setModalOpen(false)
+            });
+    }
+
     return <>
         {user && profile &&
         !user?.message && (<Layout title={`Добро пожаловать, ${profile?.name}`}>
@@ -44,8 +104,7 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                      style={{backgroundImage: isBg ? "url(/account-bg.jpg)" : user.cover?.url ? `url(${user.cover?.url})` : 'none'}}
                 >
                     {coverHover && isAuthor && (<>
-                        {!isBg && <Button size={"large"} icon={<UploadOutlined/>}
-                                          onClick={handleBgClick}>Загрузить <PictureOutlined/></Button>}
+                        {!isBg && <input type={"file"}  onChange={handleUploadClick} /> }
                         {isBg && <Button size={"large"} icon={<DeleteOutlined/>}
                                          onClick={handleBgClick}>Удалить <PictureOutlined/></Button>}
                     </>)
