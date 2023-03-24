@@ -11,7 +11,6 @@ by Aleksandr Shatskikh
 ## Known problems
 1. I didn't find the way to refresh the API Token after PATCHing the slug without relogin. So i added the little text about it above the slug snippet
 2. The auth method is not perfect. I know i should refactor the profile edit section one day.
-3. _Ant.Design_ validation has known [issue](https://github.com/ant-design/ant-design/issues/15674#issuecomment-1424798193) with getting current validation errors, so it's useless a bit and should be refactored.
 
 ## Getting Started
 
@@ -29,3 +28,6 @@ pnpm dev
 - [http://localhost:3000/](http://localhost:3000)
 - [http://localhost:3000/login](http://localhost:3000/login)
 - [http://localhost:3000/register](http://localhost:3000/dashboard)
+- [http://localhost:3000/accounts](http://localhost:3000/accounts)
+- [http://localhost:3000/account/{slug}](http://localhost:3000/account/{slug})
+

@@ -6,8 +6,6 @@ import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOut
 import {useAuth} from "../hooks/auth";
 import ProfileEditForm from "./ProfileEditForm";
 import {profile} from "../types/profileType";
-import useSWRMutation from "swr/mutation";
-import {useCookies} from "react-cookie";
 
 interface profileType {
     user: profile,
@@ -23,7 +21,6 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [isBg, setBg] = useState(false)
     const [isAvatar, setAvatar] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
-    const [cookies] = useCookies(["yoldiToken"])
 
     const showModal = () => {
         setModalOpen(true);
@@ -36,36 +33,6 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const handleAvatarClick = () => {
         setAvatar(!isAvatar);
     };
-
-    const { edit } = useSWRMutation(
-        {
-            url: "https://frontend-test-api.yoldi.agency/api/profile",
-            cookies,
-        },
-        editUserInfo
-    );
-
-    async function editUserInfo(
-        { url, cookies }: { url: string; cookies: string | any },
-        { arg }: { arg: any }
-    ) {
-        return fetch(url, {
-            method: "PATCH",
-            body: JSON.stringify(arg),
-            headers: {
-                accept: "application/json",
-                "Content-Type": "application/json",
-                "X-API-KEY": cookies.yoldiToken,
-            },
-        })
-            .then((res) => res.json())
-            .then(data => {
-                if(profile.slug !== data.slug) {
-                    logout()
-                }
-                setModalOpen(false)
-            });
-    }
 
     return <>
         {user && profile &&

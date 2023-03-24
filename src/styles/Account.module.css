@@ -23,7 +23,8 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: rgb(var(--foreground-rgb));
+    background-color: rgb(var(--foreground-rgb));
+    background-size: cover;
     border:1px solid rgb(var(--gray-300-rgb));
     font-size: 36px;
     text-transform: uppercase;
