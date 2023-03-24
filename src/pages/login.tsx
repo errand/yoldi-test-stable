@@ -2,7 +2,7 @@ import { Card, Button, Form, Input } from 'antd';
 import Layout from "../components/Layout";
 import styles from "../styles/Home.module.css";
 import {useAuth} from "../hooks/auth";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {LockOutlined, MailOutlined} from "@ant-design/icons";
 
 export default function Login() {
@@ -16,22 +16,18 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [errors, setErrors] = useState([])
+    const [form] = Form.useForm();
 
     const onFinish = () => {
         login({email, password, setErrors})
     };
 
-    const onValuesChange = () => {
-        if ( email.includes('@') && password) {
-            setSubmitDisabled(false);
-        } else {
-            setSubmitDisabled(true);
+    const handleFormChange = () => {
+        const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
+        if(email && password) {
+            setSubmitDisabled(hasErrors);
         }
-    };
-
-    useEffect(() => {
-        onValuesChange()
-    })
+    }
 
     return (
         <Layout title={'Войти в Yoldi'}>
@@ -43,10 +39,12 @@ export default function Login() {
                         style={{ maxWidth: 400 }}
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
+                        form={form}
+                        onFieldsChange={handleFormChange}
                     >
                         <Form.Item
                             name="email"
-                            rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}
+                            rules={[{ type: 'email', required: true, message: 'Просьба ввести валидный email!' }]}
                         >
                             <Input
                                 placeholder={'E-mail'}
@@ -58,7 +56,7 @@ export default function Login() {
 
                         <Form.Item
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[{ required: true, message: 'Без пароля нельзя!' }]}
                         >
                             <Input.Password
                                 placeholder={'Пароль'}

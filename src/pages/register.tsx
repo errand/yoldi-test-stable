@@ -11,27 +11,23 @@ export default function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPwd] = useState('');
+    const [form] = Form.useForm();
 
     const { register } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/',
     })
 
-    const onValuesChange = () => {
-        if ( name && email.includes('@') && password) {
-            setSubmitDisabled(false);
-        } else {
-            setSubmitDisabled(true);
+    const handleFormChange = () => {
+        const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
+        if(email && password) {
+            setSubmitDisabled(hasErrors);
         }
-    };
+    }
 
     const onFinish = async () => {
         await register({name,  email, password})
     };
-
-    useEffect(() => {
-        onValuesChange();
-    }, [name, email, password])
 
     /* eslint-disable no-template-curly-in-string */
     const validateMessages = {
@@ -52,6 +48,8 @@ export default function Register() {
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
                         validateMessages={validateMessages}
+                        form={form}
+                        onFieldsChange={handleFormChange}
                     >
                         <Form.Item
                             name="name"
