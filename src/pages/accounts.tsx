@@ -17,7 +17,7 @@ export default function Accounts() {
     const onNextPage = () => setPage((page+1)%maxPage)
     const onPrevPage = () => setPage((page+limit-1)%maxPage)
 
-    const { data: usersList } = useSWR(`/api/user`,() => {
+    const { data: usersList } = useSWR(`/api/user?page=${page}`,() => {
         return fetch(`https://frontend-test-api.yoldi.agency/api/user`).then((res) => res.json()).then(data => setList(data))
     });
 
