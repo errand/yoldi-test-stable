@@ -21,13 +21,14 @@ export default function ProfileEditForm({profile, setModalOpen}: editType) {
 
     const {logout} = useAuth()
 
-    const { trigger } = useSWRMutation(
+    const { edit } = useSWRMutation(
         {
             url: "https://frontend-test-api.yoldi.agency/api/profile",
             cookies,
         },
         editUserInfo
     );
+
     async function editUserInfo(
         { url, cookies }: { url: string; cookies: string | any },
         { arg }: { arg: any }
@@ -62,7 +63,7 @@ export default function ProfileEditForm({profile, setModalOpen}: editType) {
             coverId: null,
             description,
         };
-        trigger(data);
+        edit(data);
     }
 
 
