@@ -1,5 +1,6 @@
 import styles from "../styles/ProfileEditForm.module.css";
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, Tooltip } from "antd";
+import { InfoCircleOutlined } from '@ant-design/icons';
 import {useState} from "react";
 import useSWRMutation from "swr/mutation";
 import {useAuth} from "../hooks/auth";
@@ -92,7 +93,14 @@ export default function ProfileEditForm({profile, setModalOpen}: editType) {
                 <Input
                     size="large"
                     addonBefore={process.env.NEXT_PUBLIC_BACKEND_URL}
-                    onChange={(e) => setSlug(e.target.value)}  />
+                    onChange={(e) => setSlug(e.target.value)}
+                    suffix={
+                        <Tooltip title="После изменения адреса, нужно будет авторизоваться заново">
+                            <InfoCircleOutlined style={{ color: 'rgba(181,181,181,.45)' }} />
+                        </Tooltip>
+                    }
+                />
+
             </Form.Item>
 
             <Form.Item
