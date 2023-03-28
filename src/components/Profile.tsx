@@ -1,8 +1,8 @@
 import styles from '@/styles/Account.module.css'
 import Layout from '../components/Layout'
-import {useState} from "react";
+import {useRef,useState} from "react";
 import {Button, Modal} from "antd";
-import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
+import {PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
 import {useAuth} from "../hooks/auth";
 import ProfileEditForm from "./ProfileEditForm";
 import {profile} from "../types/profileType";
@@ -17,6 +17,7 @@ interface profileType {
 
 export default function Profile({user, profile, isAuthor}: profileType) {
     const { logout } = useAuth({ middleware: 'auth' })
+    const actualBtnRef = useRef(null);
 
     const [coverHover, setCoverHover] = useState(false)
     const [avatarHover, setAvatarHover] = useState(false)
@@ -26,30 +27,33 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [cookies] = useCookies(["yoldiToken"])
     const [file, setFile] = useState<File>();
 
-
     const handleUploadClick = (e: ChangeEvent<HTMLInputElement>) => {
+
         if (e.target.files) {
             setFile(e.target.files[0]);
         }
+
+        console.log(file)
 
         if (!file) {
             return;
         }
 
-        console.log(file)
+        const body = new FormData();
+        body.append("file", file);
 
         // 👇 Uploading the file using the fetch API to the server
         fetch('https://frontend-test-api.yoldi.agency/api/image', {
             method: 'POST',
-            body: file,
+            body: body,
             // 👇 Set headers manually for single file upload
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'accept': 'application/json'
-            },
         })
             .then((res) => res.json())
-            .then((data) => console.log(data))
+            .then((data) => trigger({
+                name: profile?.name,
+                slug: profile?.slug,
+                coverId: data.id
+            }))
             .catch((err) => console.error(err));
     };
 
@@ -86,12 +90,6 @@ export default function Profile({user, profile, isAuthor}: profileType) {
             },
         })
             .then((res) => res.json())
-            .then(data => {
-                if(profile.slug !== data.slug) {
-                    logout()
-                }
-                setModalOpen(false)
-            });
     }
 
     return <>
@@ -101,10 +99,12 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                 <div className={styles.cover}
                      onMouseEnter={() => setCoverHover(true)}
                      onMouseLeave={() => setCoverHover(false)}
-                     style={{backgroundImage: isBg ? "url(/account-bg.jpg)" : user.cover?.url ? `url(${user.cover?.url})` : 'none'}}
+
+                     style={{backgroundImage: isBg ? isAuthor ? `url(${profile.cover?.url})` : `url(${user.cover?.url})` : 'none'}}
                 >
+
                     {coverHover && isAuthor && (<>
-                        {!isBg && <input type={"file"}  onChange={handleUploadClick} /> }
+                        {!isBg && <input type="file" id="actual-btn" onChange={handleUploadClick} /> }
                         {isBg && <Button size={"large"} icon={<DeleteOutlined/>}
                                          onClick={handleBgClick}>Удалить <PictureOutlined/></Button>}
                     </>)
