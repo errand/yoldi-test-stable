@@ -27,9 +27,6 @@ export default function Accounts() {
             <div className={'wrapper'}>
                 <h1 className={styles.h1}>Список аккаунтов</h1>
                 {list.length < 1 && <Loader isLoading />}
-                {list && list.map(user => <UserRow key={user.name+user.slug} user={user} />)}
-
-                {list.length < 1 && <div className={'loader'}><LoadingOutlined /></div>}
 
                 {list && list.slice(page*limit,limit*(page+1)).map(user => <UserRow key={user.name+user.slug} user={user} />)}
 

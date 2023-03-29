@@ -27,7 +27,6 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     const [modalOpen, setModalOpen] = useState(false);
     const [isLoadingCover, setLoadingCover] = useState(false)
     const [cookies] = useCookies(["yoldiToken"])
-    const [file, setFile] = useState<File>();
 
     useEffect(() => {
         if(isAuthor && profile?.cover?.url) {
@@ -41,16 +40,13 @@ export default function Profile({user, profile, isAuthor}: profileType) {
 
     const handleUploadClick = (e: any, type: string) => {
         setLoadingCover(true)
-        if (e.target.files) {
-            setFile(e.target.files[0]);
-        }
-
-        if (!file) {
+        if (!e.target.files) {
+            setLoadingCover(false)
             return;
         }
 
         const body = new FormData();
-        body.append("file", file);
+        body.append("file", e.target.files[0]);
 
         fetch('https://frontend-test-api.yoldi.agency/api/image', {
             method: 'POST',
