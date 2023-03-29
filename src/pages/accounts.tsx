@@ -4,7 +4,7 @@ import useSWR from "swr";
 import UserRow from "../components/UserRow";
 import Layout from "../components/Layout";
 import styles from '@/styles/Accounts.module.css'
-import {LoadingOutlined} from '@ant-design/icons';
+import Loader from "../components/Loader";
 
 export default function Accounts() {
     const {user} = useAuth({middleware: 'auth'})
@@ -18,7 +18,7 @@ export default function Accounts() {
         <main className={styles.main}>
             <div className={'wrapper'}>
                 <h1 className={styles.h1}>Список аккаунтов</h1>
-                {list.length < 1 && <div className={'loader'}><LoadingOutlined /></div>}
+                {list.length < 1 && <Loader isLoading />}
                 {list && list.map(user => <UserRow key={user.name+user.slug} user={user} />)}
             </div>
         </main>

@@ -1,13 +1,14 @@
 import styles from '@/styles/Account.module.css'
 import Layout from '../components/Layout'
-import {useRef,useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Button, Modal} from "antd";
-import {PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
+import {UploadOutlined, PictureOutlined, DeleteOutlined, CameraOutlined, EditOutlined, LogoutOutlined} from '@ant-design/icons';
 import {useAuth} from "../hooks/auth";
 import ProfileEditForm from "./ProfileEditForm";
 import {profile} from "../types/profileType";
 import useSWRMutation from "swr/mutation";
 import {useCookies} from "react-cookie";
+import Loader from "./Loader";
 
 interface profileType {
     user: profile,
@@ -21,19 +22,28 @@ export default function Profile({user, profile, isAuthor}: profileType) {
 
     const [coverHover, setCoverHover] = useState(false)
     const [avatarHover, setAvatarHover] = useState(false)
-    const [isBg, setBg] = useState(false)
+    const [cover, setCover] = useState('')
     const [isAvatar, setAvatar] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
+    const [isLoadingCover, setLoadingCover] = useState(false)
     const [cookies] = useCookies(["yoldiToken"])
     const [file, setFile] = useState<File>();
 
-    const handleUploadClick = (e: ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+        if(isAuthor && profile?.cover?.url) {
+            setCover(profile?.cover?.url)
+        } else if(!isAuthor && user?.cover?.url) {
+            setCover(profile?.cover?.url)
+        } else {
+            setCover(null)
+        }
+    })
 
+    const handleUploadClick = (e: ChangeEvent<HTMLInputElement>, type: string) => {
+        setLoadingCover(true)
         if (e.target.files) {
             setFile(e.target.files[0]);
         }
-
-        console.log(file)
 
         if (!file) {
             return;
@@ -42,17 +52,15 @@ export default function Profile({user, profile, isAuthor}: profileType) {
         const body = new FormData();
         body.append("file", file);
 
-        // 👇 Uploading the file using the fetch API to the server
         fetch('https://frontend-test-api.yoldi.agency/api/image', {
             method: 'POST',
             body: body,
-            // 👇 Set headers manually for single file upload
         })
             .then((res) => res.json())
             .then((data) => trigger({
                 name: profile?.name,
                 slug: profile?.slug,
-                coverId: data.id
+                [type]: data.id
             }))
             .catch((err) => console.error(err));
     };
@@ -62,7 +70,11 @@ export default function Profile({user, profile, isAuthor}: profileType) {
     };
 
     const handleBgClick = () => {
-        setBg(!isBg);
+        trigger({
+            name: profile?.name,
+            slug: profile?.slug,
+            coverId: null
+        })
     };
 
     const handleAvatarClick = () => {
@@ -90,6 +102,7 @@ export default function Profile({user, profile, isAuthor}: profileType) {
             },
         })
             .then((res) => res.json())
+            .then(() => setLoadingCover(false))
     }
 
     return <>
@@ -99,13 +112,14 @@ export default function Profile({user, profile, isAuthor}: profileType) {
                 <div className={styles.cover}
                      onMouseEnter={() => setCoverHover(true)}
                      onMouseLeave={() => setCoverHover(false)}
-
-                     style={{backgroundImage: isBg ? isAuthor ? `url(${profile.cover?.url})` : `url(${user.cover?.url})` : 'none'}}
+                     style={{backgroundImage: cover ? `url(${cover})` : `none`}}
                 >
+                    <Loader isLoading={isLoadingCover} />
 
-                    {coverHover && isAuthor && (<>
-                        {!isBg && <input type="file" id="actual-btn" onChange={handleUploadClick} /> }
-                        {isBg && <Button size={"large"} icon={<DeleteOutlined/>}
+                    {!isLoadingCover && coverHover && isAuthor && (<>
+                        {!cover && <label className={styles.labelButton} htmlFor={"actual-btn"}><UploadOutlined/> Загрузить <PictureOutlined/>
+                            <input type="file" ref={actualBtnRef} hidden id="actual-btn" onChange={(e) => handleUploadClick(e, 'coverId')} /></label> }
+                        {cover && <Button size={"large"} icon={<DeleteOutlined/>}
                                          onClick={handleBgClick}>Удалить <PictureOutlined/></Button>}
                     </>)
                     }
