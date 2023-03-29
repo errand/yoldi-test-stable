@@ -22,7 +22,7 @@ export default function Profile({user, profile, isAuthor}: profileType) {
 
     const [coverHover, setCoverHover] = useState(false)
     const [avatarHover, setAvatarHover] = useState(false)
-    const [cover, setCover] = useState('')
+    const [cover, setCover] = useState<any>()
     const [isAvatar, setAvatar] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
     const [isLoadingCover, setLoadingCover] = useState(false)
@@ -31,15 +31,15 @@ export default function Profile({user, profile, isAuthor}: profileType) {
 
     useEffect(() => {
         if(isAuthor && profile?.cover?.url) {
-            setCover(profile?.cover?.url)
+            setCover(profile?.cover?.url!)
         } else if(!isAuthor && user?.cover?.url) {
-            setCover(profile?.cover?.url)
+            setCover(profile?.cover?.url!)
         } else {
             setCover(null)
         }
     })
 
-    const handleUploadClick = (e: ChangeEvent<HTMLInputElement>, type: string) => {
+    const handleUploadClick = (e: any, type: string) => {
         setLoadingCover(true)
         if (e.target.files) {
             setFile(e.target.files[0]);

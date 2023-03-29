@@ -1,7 +1,11 @@
 import {LoadingOutlined} from "@ant-design/icons";
 
-export default function Loader({isLoading}) {
+interface loaderType {
+    isLoading: boolean
+}
+
+export default function Loader( {isLoading}: loaderType ) {
     return (
-        isLoading && <div className={'loader'}><LoadingOutlined /></div>
+        isLoading ? <div className={'loader'}><LoadingOutlined /></div> : null
     )
 }
