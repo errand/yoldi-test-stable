@@ -4,6 +4,7 @@ import useSWR from "swr";
 import UserRow from "../components/UserRow";
 import Layout from "../components/Layout";
 import styles from '@/styles/Accounts.module.css'
+import Loader from "../components/Loader";
 import {LoadingOutlined} from '@ant-design/icons';
 import {Button} from "antd";
 
@@ -24,8 +25,9 @@ export default function Accounts() {
     return <Layout title={'Список пользователей'}>
         <main className={styles.main}>
             <div className={'wrapper'}>
-
                 <h1 className={styles.h1}>Список аккаунтов</h1>
+                {list.length < 1 && <Loader isLoading />}
+                {list && list.map(user => <UserRow key={user.name+user.slug} user={user} />)}
 
                 {list.length < 1 && <div className={'loader'}><LoadingOutlined /></div>}
 
